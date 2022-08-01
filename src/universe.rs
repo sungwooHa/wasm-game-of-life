@@ -65,10 +65,47 @@ impl Universe {
         self.cells = next;
     }
 
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+
+   pub fn height(&self) -> u32 {
+        self.height
+    }
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
+    }
+
+    pub fn set_width(&mut self, width : u32) {
+        self.width = width;
+        self.cells = (0..width * self.height).map(|_| Cell::Dead).collect();
+    }
+
+    pub fn set_height(&mut self, height : u32) {
+        self.height = height;
+        self.cells = (0..self.width * height).map(|_| Cell::Dead).collect();
+    }
+
+}
+
+
+impl Universe{
+    
     fn get_index(&self, row: u32, column: u32) -> usize {
         (row * self.width + column) as usize //vector 하나로 관리 되게 때문에
     }
 
+    pub fn get_cells(&self) -> &[Cell] {
+        &self.cells
+    }
+
+    pub fn set_cells(&mut self,  cells : &[(u32,u32)]) {
+        for (row, col) in cells.iter().cloned() {
+            let idx = self.get_index(row, col);
+            self.cells[idx] = Cell::Alive
+        }
+    }
+    
     fn live_nighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
         for delta_row in [self.height - 1, 0, 1].iter().cloned() {
@@ -84,17 +121,6 @@ impl Universe {
             }
         }
         count
-    }
-
-    pub fn width(&self) -> u32 {
-        self.width
-    }
-
-   pub fn height(&self) -> u32 {
-        self.height
-    }
-    pub fn cells(&self) -> *const Cell {
-        self.cells.as_ptr()
     }
 }
 

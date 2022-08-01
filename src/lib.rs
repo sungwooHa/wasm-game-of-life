@@ -2,7 +2,7 @@ extern crate wasm_bindgen;
 
 use wasm_bindgen::prelude::*;
 mod cell;
-mod universe;
+pub mod universe;
 mod utils;
 
 #[wasm_bindgen]
