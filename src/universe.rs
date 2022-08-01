@@ -1,8 +1,8 @@
 extern crate wasm_bindgen;
-
 use crate::cell::Cell;
 use std::fmt;
 use wasm_bindgen::prelude::*;
+extern crate js_sys;
 
 #[wasm_bindgen]
 pub struct Universe {
@@ -16,11 +16,12 @@ impl Universe {
     pub fn new() -> Universe {
         let width = 64;
         let height = 64;
+
         let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
+            .map(|_|{
+                if js_sys::Math::random() < 0.5 {
                     Cell::Alive
-                } else {
+                }else {
                     Cell::Dead
                 }
             })
@@ -30,7 +31,8 @@ impl Universe {
             width,
             height,
             cells,
-        }
+
+       }
     }
 
     pub fn render(&self) -> String {
@@ -87,7 +89,8 @@ impl Universe {
     pub fn width(&self) -> u32 {
         self.width
     }
-    pub fn height(&self) -> u32 {
+
+   pub fn height(&self) -> u32 {
         self.height
     }
     pub fn cells(&self) -> *const Cell {
@@ -103,7 +106,6 @@ impl fmt::Display for Universe {
             }
             write!(f, "\n")?;
         }
-
         Ok(())
     }
 }
