@@ -1,12 +1,12 @@
 extern crate wasm_bindgen;
 
 use wasm_bindgen::prelude::*;
-mod universe;
 mod cell;
+mod universe;
 mod utils;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 
