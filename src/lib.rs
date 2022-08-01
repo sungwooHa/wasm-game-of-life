@@ -1,5 +1,6 @@
 extern crate wasm_bindgen;
 
+use universe::Universe;
 use wasm_bindgen::prelude::*;
 mod cell;
 pub mod universe;
