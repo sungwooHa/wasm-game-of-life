@@ -85,7 +85,11 @@ impl Universe {
         self.height = height;
         self.cells = (0..self.width * height).map(|_| Cell::Dead).collect();
     }
-
+    
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx].toggle();
+    }
 }
 
 
@@ -105,7 +109,7 @@ impl Universe{
             self.cells[idx] = Cell::Alive
         }
     }
-    
+
     fn live_nighbor_count(&self, row: u32, column: u32) -> u8 {
         let mut count = 0;
         for delta_row in [self.height - 1, 0, 1].iter().cloned() {
